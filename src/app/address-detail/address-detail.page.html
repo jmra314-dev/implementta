@@ -1,0 +1,223 @@
+<ion-header color="light">
+        <ion-toolbar>
+                <ion-segment  color="secondary">
+
+
+                        <ion-segment-button checked (click)="isActivated(1)">
+                                <ion-icon name ="home"></ion-icon>
+                                <ion-label style="font-size:8px"><small>Dirección Predio</small></ion-label>
+                              </ion-segment-button>
+                              
+                        <ion-segment-button checked (click)="isActivated(2)">
+                                <ion-icon name ="mail"></ion-icon>
+                                <ion-label style="font-size:8px"><small>Dirección Notificación</small></ion-label>
+                              </ion-segment-button>
+                              
+                        <ion-segment-button checked (click)="isActivated(3)">
+                                <ion-icon name ="map"></ion-icon>
+                                <ion-label style="font-size:8px"><small>Mapas</small></ion-label>
+                              </ion-segment-button>
+
+
+
+                      </ion-segment>
+        </ion-toolbar>
+    </ion-header>
+<ion-content >
+      
+    <div *ngIf="predio">
+          
+          
+                        <ion-list>
+                            <ion-list inset *ngFor="let item of infoAccount">
+                                   <ion-item>
+                                           <ion-label position ="floating">Calle:</ion-label>
+                                           <ion-input [(ngModel)]="callePredio" (ionInput)="detectedChanges()"></ion-input>
+                                       </ion-item>
+                                       <ion-item>
+                                           <ion-grid>
+                                               <ion-row>
+                                                   <ion-col>
+                                                           <ion-label position ="floating">Manzana:</ion-label>
+                                                           <ion-input  [(ngModel)]="manzanaPredio" (ionInput)="detectedChanges()"></ion-input>
+                                                   </ion-col>
+                                                   <ion-col>
+                                                           <ion-label position ="floating">Lote:</ion-label>
+                                                           <ion-input  [(ngModel)]="lotePredio" (ionInput)="detectedChanges()"></ion-input>
+                                                   </ion-col>
+                                               </ion-row>
+                                           </ion-grid>
+                                       
+                                        
+                                       
+                                               </ion-item>
+                                               <ion-item>
+                                                   <ion-grid>
+                                                       <ion-row>
+                                                           <ion-col>
+                                                                   <ion-label position ="floating">No. exterior:</ion-label>
+                                                                   <ion-input type ="number"  [(ngModel)]="numeroExtPredio" maxlength="4" (ionInput)="detectedChanges()"></ion-input>
+                                                           </ion-col>
+                                                           <ion-col>
+                                                                   <ion-label position ="floating">No. interior:</ion-label>
+                                                                   <ion-input type="number"  [(ngModel)]="numeroIntPredio" maxlength="4" (ionInput)="detectedChanges()"></ion-input>
+                                                           </ion-col>
+                                                       </ion-row>
+                                                   </ion-grid>
+                                       
+                                               </ion-item>
+                                               <ion-item>
+                                                   <ion-grid>
+                                                       <ion-row>
+                                                           <ion-col>
+                                                                   <ion-label position ="floating">Colonia:</ion-label>
+                                                                   <ion-input type="text"  [(ngModel)]="coloniaPredio" (ionInput)="detectedChanges()"></ion-input>
+                                                           </ion-col>
+                                                           <ion-col>
+                                                                   <ion-label position ="floating">Población:</ion-label>
+                                                                   <ion-input type="text"  [(ngModel)]="poblacionPredio" (ionInput)="detectedChanges()"></ion-input>
+                                                           </ion-col>
+                                                       </ion-row>
+                                                   </ion-grid>
+                                       
+                                        
+                                       
+                                       </ion-item>
+                                       <ion-item>
+                                               <ion-label position ="floating">Código postal:</ion-label>
+                                               <ion-input type="number"  [(ngModel)]="cpPredio" maxlength="5" (ionInput)="detectedChanges()"></ion-input>
+                                       </ion-item>
+                      
+                                       <ion-item>
+                                            <ion-grid>
+                                                <ion-row>
+                                                    <ion-col>
+                                                        <ion-label position="floating">Entre calle 1:</ion-label>
+                                                        <ion-input  [(ngModel)]="entreCalle1" type ="text" (ionInput)="detectedChanges()"></ion-input>
+                                                    </ion-col>
+                                                    <ion-col>
+                                                        <ion-label position="floating">Entre calle 2:</ion-label>
+                                                        <ion-input  [(ngModel)]="entreCalle2" type ="text" (ionInput)="detectedChanges()"></ion-input>
+                                                    </ion-col>
+                                                </ion-row>
+                                            </ion-grid>
+                                        </ion-item>
+                                        <ion-item>
+                                            <ion-label position="floating">Referencias:</ion-label>
+                                            <ion-textarea  [(ngModel)]="referenciaPredio" (ionInput)="detectedChanges()"></ion-textarea>
+                                        </ion-item>
+
+
+
+
+                            </ion-list>
+                        </ion-list>
+         
+        <ion-button color ="secondary" expand="block" (click)="saveChanges(1)"> <ion-icon name="save"></ion-icon>Guardar cambios</ion-button>
+        <ion-button color ="secondary" expand="block" (click)="getDirection(1)">Obtener dirección Auto</ion-button>
+    </div>
+    <div *ngIf ="notificacion">
+      
+<ion-list>
+    <ion-list inset *ngFor="let item of infoAccount">
+            <ion-item>
+                    <ion-label position ="floating">Calle:</ion-label>
+                    <ion-input [(ngModel)]="calleNotificacion" (ionInput)="detectedChanges()"></ion-input>
+                </ion-item>
+                <ion-item>
+                    <ion-grid>
+                        <ion-row>
+                            <ion-col>
+                                    <ion-label position ="floating">Manzana:</ion-label>
+                                    <ion-input [(ngModel)]="manzanaNotificacion" (ionInput)="detectedChanges()"></ion-input>
+                            </ion-col>
+                            <ion-col>
+                                    <ion-label position ="floating">Lote:</ion-label>
+                                    <ion-input [(ngModel)]="loteNotificacion" (ionInput)="detectedChanges()"></ion-input>
+                            </ion-col>
+                        </ion-row>
+                    </ion-grid>
+                
+                 
+                
+                        </ion-item>
+                        <ion-item>
+                            <ion-grid>
+                                <ion-row>
+                                    <ion-col>
+                                            <ion-label position ="floating">No. exterior:</ion-label>
+                                            <ion-input type ="number" [(ngModel)]="numeroExtNotificacion" maxlength="4" (ionInput)="detectedChanges()"></ion-input>
+                                    </ion-col>
+                                    <ion-col>
+                                            <ion-label position ="floating">No. interior:</ion-label>
+                                            <ion-input type="number" [(ngModel)]="numeroIntNotificacion" maxlength="4" (ionInput)="detectedChanges()"></ion-input>
+                                    </ion-col>
+                                </ion-row>
+                            </ion-grid>
+                
+                        </ion-item>
+                        <ion-item>
+                            <ion-grid>
+                                <ion-row>
+                                    <ion-col>
+                                            <ion-label position ="floating">Colonia:</ion-label>
+                                            <ion-input type="text" [(ngModel)]="coloniaNotificacion" (ionInput)="detectedChanges()"></ion-input>
+                                    </ion-col>
+                                    <ion-col>
+                                            <ion-label position ="floating">Población:</ion-label>
+                                            <ion-input type="text" [(ngModel)]="poblacionNotificacion" (ionInput)="detectedChanges()"></ion-input>
+                                    </ion-col>
+                                </ion-row>
+                            </ion-grid>
+                
+                 
+
+                
+                </ion-item>
+                <ion-item>
+                        <ion-label position ="floating">Código postal:</ion-label>
+                        <ion-input type="text" [(ngModel)]="cpNotificacion" (ionInput)="detectedChanges()"></ion-input>
+                </ion-item>
+                <ion-item>
+                        <ion-grid>
+                            <ion-row>
+                                <ion-col>
+                                    <ion-label position="floating">Entre calle 1:</ion-label>
+                                    <ion-input  [(ngModel)]="entreCalle1Notificacion" type ="text" (ionInput)="detectedChanges()"></ion-input>
+                                </ion-col>
+                                <ion-col>
+                                    <ion-label position="floating">Entre calle 2:</ion-label>
+                                    <ion-input  [(ngModel)]="entreCalle2Notificacion" type ="text" (ionInput)="detectedChanges()"></ion-input>
+                                </ion-col>
+                            </ion-row>
+                        </ion-grid>
+                    </ion-item>
+                    <ion-item>
+                            <ion-label position="floating">Referencias:</ion-label>
+                            <ion-textarea  [(ngModel)]="referenciaNotificacion" (ionInput)="detectedChanges()"></ion-textarea>
+                        </ion-item>
+        
+
+
+
+    </ion-list>
+</ion-list>
+                <ion-button color ="secondary" expand="block" (click)="saveChanges(2)"> <ion-icon name="save"></ion-icon>Guardar cambios</ion-button>
+                <ion-button color ="secondary" expand="block" (click)="getDirection(2)">Obtener dirección Auto</ion-button>
+
+    </div>
+    <div *ngIf="mapa">
+<br>
+<br>
+<br>
+
+        <ion-button color ="secondary" expand="block" (click)="goArcgis()">Ver mapa Arcgis</ion-button>
+        <ion-button color ="secondary" expand="block" (click)="openLink()">Ver indicaciones Google Maps</ion-button>
+    
+    </div>
+
+                 
+
+
+    </ion-content>
+    

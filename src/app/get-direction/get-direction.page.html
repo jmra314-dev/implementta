@@ -1,0 +1,37 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Obtener direccion</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-item>
+      <ion-label >
+          <p>Latitud:{{latitud}}</p>
+          <p>Longitud:{{longitud}}</p>
+  
+        </ion-label>
+        <ion-buttons slot="end">
+            <ion-button color="tertiary" (click)="refreshPosition()">
+                <ion-icon name="refresh"></ion-icon>
+            </ion-button>
+           
+          </ion-buttons>
+  </ion-item>
+
+<ion-button expand="block" color ="tertiary" (click)="getDirection()">Buscar dirección</ion-button>
+
+<ion-list>
+  <ion-item>
+    <ion-label>
+      <p><strong>Pais: </strong>{{countryName}}</p>
+      <p><strong>Codigo Postal: </strong>{{postalCode}}</p>
+      <p><strong>Estado: </strong>{{administrativeArea}}</p>
+      <p><strong>Municipio: </strong>{{locality}}</p>
+      <p><strong>Colonia: </strong>{{subLocality}}</p>
+      <p><strong>Calle: </strong>{{thoroughfare}}</p>
+      <p><strong>Numero: </strong>{{subThoroughfare}}</p>
+    </ion-label>
+  </ion-item>
+</ion-list>
+</ion-content>

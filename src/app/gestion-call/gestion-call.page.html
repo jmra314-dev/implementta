@@ -1,0 +1,59 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Captura de llamada</ion-title>
+    <ion-buttons slot ="end">
+ 
+        <ion-button color ="tertiary" (click)="exit()"><ion-icon name="close"></ion-icon></ion-button>
+      </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+<ion-item>
+  <ion-label>Tarea</ion-label>
+  <ion-select interface ="popover" placeholder ="Selecciona uno" >
+    <ion-select-option>Notificar adeudo por teléfono</ion-select-option>
+  </ion-select>
+</ion-item>
+<ion-item>
+  <ion-label  position="floating">Observaciones</ion-label>
+  <ion-textarea rows="5"></ion-textarea>
+</ion-item>
+<ion-item>
+  <ion-label>Etiqueta de la llamada</ion-label>
+  <ion-select interface ="popover" placeholder ="Selecciona uno">
+    <ion-select-option>Agradecimiento de pago</ion-select-option>
+    <ion-select-option>Al corriente</ion-select-option>
+    <ion-select-option>No respondió llamada</ion-select-option>
+    <ion-select-option>Número equivocado</ion-select-option>
+    <ion-select-option>Número no existe o incorrecto</ion-select-option>
+    <ion-select-option>Número suspendido</ion-select-option>
+    <ion-select-option>Promesa de pago</ion-select-option>
+    <ion-select-option>Recordatorio de pago</ion-select-option>
+    <ion-select-option>Se dejó información</ion-select-option>
+    <ion-select-option>Se dejó mensaje con familiar</ion-select-option>
+    <ion-select-option>Se dejó mensaje en buzón de pago</ion-select-option>
+  </ion-select>
+</ion-item>
+<ion-item>
+  <ion-label>Fecha promesa de pago</ion-label>
+  <ion-datetime></ion-datetime>
+</ion-item>
+<ion-item>
+    <ion-label>Fecha siguiente acción</ion-label>
+    <ion-datetime></ion-datetime>
+  </ion-item>
+  <ion-item>
+    <ion-label  position="floating">Persona que atendió</ion-label>
+    <ion-input></ion-input>
+  </ion-item>
+  <ion-item>
+      <ion-label position="floating">Número convenio/recibo</ion-label>
+      <ion-input></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label>Desactivar</ion-label>
+      <ion-checkbox color = "tertiary"></ion-checkbox>
+    </ion-item>
+    <ion-button color = "tertiary" expand = "block">Terminar</ion-button>
+</ion-content>

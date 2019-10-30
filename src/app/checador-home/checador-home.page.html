@@ -1,0 +1,27 @@
+<ion-header>
+    <ion-toolbar>
+      <ion-title>
+         Checador Implementta
+      </ion-title>
+  <ion-buttons slot="end">
+    <ion-button (click)= "historico()">
+        <ion-icon color ="tertiary"  slot="icon-only" name="list"></ion-icon>
+    </ion-button>
+  </ion-buttons>
+   
+    </ion-toolbar>
+  </ion-header>
+  
+  <ion-content padding>
+  
+  
+
+  <div id="map_canvas"></div>
+  <ion-card>
+      <ion-card-content text-center>
+        <ion-button color ="tertiary" expand = "block" (click)="confirmarRegistroEntrada()">Checar Entrada</ion-button>
+        <ion-button color ="tertiary" expand = "block" (click)="confirmarRegistroSalida()">Checar Salida</ion-button>
+      </ion-card-content>
+    </ion-card>
+  </ion-content>
+  

@@ -1,0 +1,22 @@
+
+<ion-header>
+  <ion-toolbar>
+
+<!--           <ion-buttons slot="end">
+              <ion-button (click)="refresh()" ><ion-icon name="refresh" ></ion-icon></ion-button>
+          
+          
+              </ion-buttons> -->
+      
+  <!--  <ion-searchbar placeholder ="Buscar" animated (ionChange)="find($event)"></ion-searchbar> -->
+  <ion-input placeholder ="Buscar por cuenta" [(ngModel)]="accountString"></ion-input>
+  <ion-buttons slot="end">
+      <ion-button (click)="find()" ><ion-icon name="search" ></ion-icon></ion-button>
+  
+  
+      </ion-buttons> 
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <div class ="map" id="map_canvas"></div>
+</ion-content>

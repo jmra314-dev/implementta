@@ -1,0 +1,7 @@
+{
+  "name": "implementtaMovil",
+  "integrations": {
+    "cordova": {}
+  },
+  "type": "angular"
+}

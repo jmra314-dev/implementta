@@ -1,0 +1,56 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title><ion-item>
+        <ion-avatar slot="start">
+          <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTLVnFSFw-9-9nUibqBs4HdawHHxcpo8IO4has3-33P0Ic9_RWx">
+        </ion-avatar>
+        <ion-label ><small>{{nombre}}</small></ion-label>
+      </ion-item></ion-title>
+      <ion-buttons slot= "end" >
+        <ion-button (click)="close()" color ="tertiary" ><ion-icon name="close" ></ion-icon></ion-button>
+
+      </ion-buttons>
+ 
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+<ion-card>
+  <ion-card-content>
+    <ion-item>
+      <ion-label position="floating">Nombre:</ion-label>
+      <ion-input [(ngModel)]="nombre" readonly></ion-input>
+    </ion-item>
+    <ion-item>
+        <ion-label position="floating">Usuario implementta:</ion-label>
+        <ion-input [(ngModel)]="username" readonly></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">Contraseña</ion-label>
+
+        <ion-input  #passwordEyeRegister  [type]="passwordTypeInput"  [(ngModel)]="contra" readonly></ion-input>
+        <button  item-end  class="btn_eye_icon"  (click)="togglePasswordMode()">
+            <ion-icon  [name]="iconpassword"></ion-icon>
+        </button>
+       <!--  <ion-input name="contraseña" [(ngModel)]="password" type="password"></ion-input> -->
+    </ion-item>
+       <ion-item>
+        <ion-label position="floating">Puesto:</ion-label>
+        <ion-input [(ngModel)]="rol" readonly></ion-input>
+      </ion-item>
+         <ion-item>
+            <ion-label position="floating">Plaza:</ion-label>
+            <ion-input [(ngModel)]="plaza" readonly></ion-input>
+          </ion-item>
+          <ion-item>
+              <ion-label position="floating">Inicio de sesión:</ion-label>
+              <ion-input [(ngModel)]="fecha" readonly></ion-input>
+            </ion-item>
+            <ion-item>
+                
+               <p>Id dispositivo:<strong>{{imei}}</strong></p>
+              </ion-item>
+
+  </ion-card-content>
+</ion-card>
+</ion-content>

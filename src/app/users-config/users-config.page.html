@@ -1,0 +1,19 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Usuarios</ion-title>
+    <ion-buttons slot="start">
+<ion-button (click)="exit()" color ="tertiary">
+  <ion-icon name = "close"></ion-icon>
+</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list>
+    <ion-item *ngFor="let item of userInfo">
+      <ion-label>{{item.name}}</ion-label>
+      <ion-toggle slot ="end" checked={{item.isActive}} (ionChange)="deActivate(item.name,item.uid,item.isActive)"></ion-toggle>
+    </ion-item>
+  </ion-list>
+</ion-content>

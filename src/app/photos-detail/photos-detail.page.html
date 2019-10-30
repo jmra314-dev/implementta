@@ -1,0 +1,13 @@
+<ion-content>
+<!--     <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+        <ion-fab-button (click)="takePic()" color ="tertiary">
+          <ion-icon name="camera"></ion-icon>
+        </ion-fab-button>
+      </ion-fab> -->
+    <ion-slides [options]="sliderOpts">
+        <ion-slide *ngFor="let img of imgs">
+          <img src={{img.imagen}} tappable (click)="openPreview(img.imagen)"> 
+        </ion-slide>
+      </ion-slides>
+    </ion-content>
+    

@@ -1,0 +1,24 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Mis asistencias</ion-title>
+    <ion-buttons slot="end">
+      <ion-button color ="tertiary" (click)="exit()"><ion-icon name = "close"></ion-icon></ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+    <ion-virtual-scroll  [items]="infoAsistencia">
+        <ion-item  *virtualItem="let item">
+          <div style="white-space : pre;text-align: left;">
+              <p style="font-size: 10px"> <strong>Hora entrada:</strong>{{item.entrada}}</p>
+              <p style="font-size: 10px"> <strong>Hora salida:</strong>{{item.salida}}</p>
+              <p style="font-size: 10px"> <strong>Estado:</strong>{{item.descripcion}}</p>
+          </div>
+
+
+        </ion-item>
+      </ion-virtual-scroll>
+
+</ion-content>

@@ -1,0 +1,209 @@
+<ion-header>
+  <ion-toolbar>
+
+    <ion-searchbar placeholder="Buscar por propietario" animated (ionChange)="find($event)"></ion-searchbar>
+    <div style="text-align: center">
+      <ion-item>
+
+
+        <ion-chip color="primary">
+
+          <ion-label>
+            <p>
+              <small>Total:<strong>{{total}}</strong></small>
+            </p>
+          </ion-label>
+        </ion-chip>
+        <ion-chip color="primary">
+
+          <ion-label>
+            <p>
+              <small>Gestionadas: <strong>{{gestionadas}}</strong></small>
+            </p>
+          </ion-label>
+        </ion-chip>
+
+        <ion-chip color="primary">
+
+          <ion-label>
+            <p>
+              <small>Faltantes:<strong>{{total - gestionadas}}</strong></small>
+            </p>
+          </ion-label>
+        </ion-chip>
+
+      </ion-item>
+    </div>
+
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+
+  <div *ngIf="account">
+ 
+
+
+    <ion-virtual-scroll [items]="account | filtro : findText ">
+      <ion-item-sliding *virtualItem="let item">
+        <ion-item class="animated fadeIn fast" (click)="getDetail(item.cuenta)">
+
+          <ion-label>
+            <p class="border"><strong>Propietario: </strong>{{item.nombre_propietario}}</p>
+            <p class="border"><strong>Cuenta: </strong>{{item.cuenta}}</p>
+              <p class='border'><strong>Dirección: </strong> {{item.calle_predio}} {{item.num_exterior_predio}}
+                {{item.colonia_predio}} {{item.poblacion_predio}} {{item.cp_predio}}</p>
+              <p class='border'><strong>Deuda:</strong>{{item.adeudo | currency:'USD':'symbol' }}</p>
+              <p *ngIf="item.gestionada == 1" style="color:green">Cuenta gestionada</p>
+          </ion-label>
+
+
+        </ion-item>
+
+        <ion-item-options side="start">
+
+          <ion-item-option color="secondary" (click)="goPanoramaView(item)">
+            <ion-icon slot="icon-only" name="walk"></ion-icon>
+
+          </ion-item-option>
+          <ion-item-option (click)="openLink(item)" color="medium">
+            <ion-icon slot="icon-only" name="bicycle"></ion-icon>
+          </ion-item-option>
+        </ion-item-options>
+
+        <ion-item-options side="end">
+          <ion-item-option color="tertiary" (click)="copyAccount(item.cuenta)">
+            <ion-icon slot="icon-only" name="copy"></ion-icon>
+          </ion-item-option>
+
+          <ion-item-option color="success" (click)="goPhotos(item.cuenta)">
+            <ion-icon slot="icon-only" name="image"></ion-icon>
+          </ion-item-option>
+
+        </ion-item-options>
+      </ion-item-sliding>
+    </ion-virtual-scroll>
+  </div>
+  <div *ngIf="!account">
+
+
+    <ion-list>
+
+      <ion-item>
+
+        <ion-label>
+
+          <p>
+            <ion-skeleton-text animated style="width: 80%"></ion-skeleton-text>
+          </p>
+          <p>
+            <ion-skeleton-text animated style="width: 60%"></ion-skeleton-text>
+          </p>
+        </ion-label>
+      </ion-item>
+      <ion-item>
+        <ion-label>
+
+          <p>
+            <ion-skeleton-text animated style="width: 80%"></ion-skeleton-text>
+          </p>
+          <p>
+            <ion-skeleton-text animated style="width: 60%"></ion-skeleton-text>
+          </p>
+        </ion-label>
+      </ion-item>
+      <ion-item>
+        <ion-label>
+
+          <p>
+            <ion-skeleton-text animated style="width: 80%"></ion-skeleton-text>
+          </p>
+          <p>
+            <ion-skeleton-text animated style="width: 60%"></ion-skeleton-text>
+          </p>
+        </ion-label>
+      </ion-item>
+      <ion-item>
+        <ion-label>
+
+          <p>
+            <ion-skeleton-text animated style="width: 80%"></ion-skeleton-text>
+          </p>
+          <p>
+            <ion-skeleton-text animated style="width: 60%"></ion-skeleton-text>
+          </p>
+        </ion-label>
+      </ion-item>
+      <ion-item>
+        <ion-label>
+
+          <p>
+            <ion-skeleton-text animated style="width: 80%"></ion-skeleton-text>
+          </p>
+          <p>
+            <ion-skeleton-text animated style="width: 60%"></ion-skeleton-text>
+          </p>
+        </ion-label>
+      </ion-item>
+      <ion-item>
+        <ion-label>
+
+          <p>
+            <ion-skeleton-text animated style="width: 80%"></ion-skeleton-text>
+          </p>
+          <p>
+            <ion-skeleton-text animated style="width: 60%"></ion-skeleton-text>
+          </p>
+        </ion-label>
+      </ion-item>
+      <ion-item>
+        <ion-label>
+
+          <p>
+            <ion-skeleton-text animated style="width: 80%"></ion-skeleton-text>
+          </p>
+          <p>
+            <ion-skeleton-text animated style="width: 60%"></ion-skeleton-text>
+          </p>
+        </ion-label>
+      </ion-item>
+      <ion-item>
+
+        <ion-label>
+
+          <p>
+            <ion-skeleton-text animated style="width: 80%"></ion-skeleton-text>
+          </p>
+          <p>
+            <ion-skeleton-text animated style="width: 60%"></ion-skeleton-text>
+          </p>
+        </ion-label>
+      </ion-item>
+      <ion-item>
+
+        <ion-label>
+
+          <p>
+            <ion-skeleton-text animated style="width: 80%"></ion-skeleton-text>
+          </p>
+          <p>
+            <ion-skeleton-text animated style="width: 60%"></ion-skeleton-text>
+          </p>
+        </ion-label>
+      </ion-item>
+
+      <ion-item>
+
+        <ion-label>
+
+          <p>
+            <ion-skeleton-text animated style="width: 80%"></ion-skeleton-text>
+          </p>
+          <p>
+            <ion-skeleton-text animated style="width: 60%"></ion-skeleton-text>
+          </p>
+        </ion-label>
+      </ion-item>
+    </ion-list>
+  </div>
+
+</ion-content>

@@ -1,0 +1,21 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Tareas Abogado</ion-title>
+
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+<ion-list>
+  <ion-item *ngFor ="let item of tareasAbogado">
+      <ion-radio-group> 
+         
+          <ion-radio (click)="exit(item.idTarea,item.tarea)"></ion-radio>
+                 <p>{{item.tarea}}</p> 
+       
+      </ion-radio-group> 
+  
+  </ion-item>
+</ion-list>
+
+</ion-content>
