@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { RestService } from '../services/rest.service';
 import { LoadingController, ModalController } from '@ionic/angular';
+import { MessagesService } from '../services/messages.service';
 
 @Component({
   selector: 'app-sync-update',
@@ -15,7 +16,7 @@ predio : boolean = true
 propietarioA : any
 address :any
 loading: any;
-  constructor(private service : RestService, private loadingCtrl : LoadingController, private modal : ModalController) { }
+  constructor(private service : RestService, private loadingCtrl : LoadingController, private modal : ModalController, private mensaje : MessagesService) { }
 
    ngOnInit() {
   
@@ -36,10 +37,12 @@ loading: any;
     
     } 
   async getInfo(){
-  this.address = await this.service.getDireccion()
+    this.address = null
+    this.propietarioA = null
+    this.address = await this.service.getDireccion()
   
-  this.propietarioA = await this.service.getPropietario()
-  console.log(this.propietarioA)
+    this.propietarioA = await this.service.getPropietario()
+  
  
  
 
@@ -52,7 +55,13 @@ loading: any;
     await this.loading.present();
   await this.service.syncActualizacionDatosDomicilios();
   await this.service.syncActualizacionDatosPropietario()
-  this.loading.dismiss();
+  this.loading.dismiss().then(()=>{
+    this.mensaje.showAlert('Sincronizacion realizada :)')
+  });
   this.modal.dismiss()
+}
+delete (id, type){
+  console.log('entra a borrar el id :: '+id + 'en el tipo :: '+type)
+  if(type == 1 ){this.service.deleteDataUpdatedAddress(id);this.getInfo()}else{this.service.deleteDataUpdatedUser(id);this.getInfo()}
 }
 }

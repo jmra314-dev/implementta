@@ -112,12 +112,17 @@ export class GestionGestorPage implements OnInit {
   async getInfoAccount() {
     this.account = await this.storage.get("accountNumber");
     this.idAspuser = await this.storage.get("IdAspUser");
+    const idRol = await this.storage.get('IdRol')
     console.log("this is the account to be proccessed");
     this.infoAccount = await this.service.getInfoAccount(this.account);
     this.idAccountSqlite = this.infoAccount[0].id;
     this.idTareaGestor = this.infoAccount[0].id_tarea;
     let gestionada = this.infoAccount[0].gestionada;
     this.tareaAsignada = this.infoAccount[0].tareaAsignada;
+    if(idRol == '2'){
+      this.idTareaGestor = 47;
+      this.tareaAsignada = "Notificar adeudo a domicilio 3ra Carta"
+    }
     if (gestionada == 1) {
       this.mensaje.showAlert("Esta cuenta ya ha sido gestionada");
       this.modalController.dismiss();
@@ -241,6 +246,7 @@ export class GestionGestorPage implements OnInit {
     });
     await this.loading.present();
     const position = await this.geolocation.getCurrentPosition();
+    
    // this.loading.dismiss();
     console.log(position);
     this.latitud = position.coords.latitude;

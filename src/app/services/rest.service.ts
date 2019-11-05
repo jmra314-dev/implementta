@@ -979,6 +979,14 @@ console.log(data)
     let sql = "UPDATE propietario SET cargado = 1 where id = ?";
     return this.db.executeSql(sql, [id]);
   }
+  deleteDataUpdatedAddress(id){
+    let sql = "DELETE FROM domicilios where id = ?";
+    return this.db.executeSql(sql, [id]);
+  }
+  deleteDataUpdatedUser(id){
+    let sql = "DELETE FROM propietario where id = ?";
+    return this.db.executeSql(sql, [id]);
+  }
   updateAccountSyncReductor(id) {
     let sql = "UPDATE gestionReductor SET cargado = 1 where id = ?";
     return this.db.executeSql(sql, [id]);

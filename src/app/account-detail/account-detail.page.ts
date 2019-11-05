@@ -166,8 +166,11 @@ export class AccountDetailPage implements OnInit {
 
  
   async saveConfirm(type) {
-
+console.log(this.isChange)
     if(this.isChange == true){
+
+      if(this.fechaLocalizacion =='1999-09-09' && type == 1){this.mensaje.showAlert('Ingresa la fecha de localización')}
+else{
     const alert = await this.alertController.create({
       header: "Confirmar!",
       message:
@@ -185,20 +188,19 @@ export class AccountDetailPage implements OnInit {
         {
           text: "Guardar",
           handler: () => {
-            if (type == 1) {
-              if(this.fechaLocalizacion =='1999-09-09'){this.mensaje.showAlert('Ingresa la fecha de localización')}else
-              {this.saveDataPropietario(1);
-              this.isChange = false}
-            } else {
-              this.saveDataPropietario(2);
-              this.isChange = false
-            }
+              this.saveDataPropietario(type);
+              this.isChange = false    
           }
         }
       ]
     });
 
     await alert.present();}
+  
+  
+  }
+
+
     else{this.mensaje.showAlert('No hay cambios que guardar :(')}
   }
   saveDataPropietario(type) {

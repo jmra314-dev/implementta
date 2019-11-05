@@ -14,8 +14,8 @@ import { Clipboard } from '@ionic-native/clipboard/ngx';
   styleUrls: ["./main-list.page.scss"]
 })
 export class MainListPage implements OnInit {
-  ngOnInit(): void {
-    throw new Error("Method not implemented.");
+  ngOnInit() {
+   
   }
   account: any[];
   findText: string = "";
