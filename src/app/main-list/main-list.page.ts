@@ -14,6 +14,9 @@ import { Clipboard } from '@ionic-native/clipboard/ngx';
   styleUrls: ["./main-list.page.scss"]
 })
 export class MainListPage implements OnInit {
+  ngOnInit(): void {
+    throw new Error("Method not implemented.");
+  }
   account: any[];
   findText: string = "";
   loading: any;
@@ -32,21 +35,13 @@ export class MainListPage implements OnInit {
     private clipboard : Clipboard
     
   ) {}
-  ngOnChanges(){
-    this.refresh();
-  }
-  ngOnDestroy(){
-    this.account = null
-  }
-  async ngOnInit() {
-  //  this.refresh();
-  }
-  ionViewDidLeave(){
-  this.account= null
-  }
+ 
+  
+ 
+  
   ionViewDidEnter() {
     this.refresh();
-
+console.log('Entra a el didenter')
   }
   async getInfo() {
     this.total = await this.service.getTotalaccounts();
@@ -141,6 +136,7 @@ export class MainListPage implements OnInit {
   }
 
   async refresh() {
+    this.account = null
     console.log('Se trata de refrescar la puta lista')
     this.loading = await this.loadingCtrl.create({
       message: "Cargando lista..."

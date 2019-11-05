@@ -8,7 +8,10 @@
 <div class="pattern">
     <div class ="perfil" *ngIf="gestor">
         <img src ="../../assets/img/gestor.png">
-        <ion-button (click)="gestionGestor()" expand="block" color= "tertiary">Gestión Visita</ion-button>
+        <ion-button (click)="gestionGestor()" expand="block" color= "success">Gestión Visita</ion-button>
+        <img src ="../../assets/img/reductor.png"> 
+                
+        <ion-button (click)="gestionReductor()" expand="block" color= "tertiary">Gestión Reductores</ion-button>
       
       </div>
 </div>
@@ -18,7 +21,12 @@
   <div class="pattern">
       <div class ="perfil" *ngIf="abogado">
           <img src ="../../assets/img/abogado.png"> 
-        <ion-button (click)="gestionAbogado()" expand="block" color= "tertiary">Gestión Legal</ion-button>
+        <ion-button (click)="gestionAbogado()" expand="block" color= "success">Gestión Legal</ion-button>
+        <img src ="../../assets/img/gestor.png">
+        <ion-button (click)="gestionGestor()" expand="block" color= "tertiary">Gestión Visita</ion-button>
+        <img src ="../../assets/img/reductor.png"> 
+                
+        <ion-button (click)="gestionReductor()" expand="block" color= "tertiary">Gestión Reductores</ion-button>
         
         </div>
     </div>
@@ -34,7 +42,7 @@
               <div class ="perfil" *ngIf="reductor">
                   <img src ="../../assets/img/reductor.png"> 
                 
-              <ion-button (click)="gestionReductor()" expand="block" color= "tertiary">Gestión Reductores</ion-button>
+              <ion-button (click)="gestionReductor()" expand="block" color= "success">Gestión Reductores</ion-button>
                 </div>
             </div>
 

@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Storage } from '@ionic/storage';
 import { ModalController } from '@ionic/angular';
+import { AppVersion } from '@ionic-native/app-version/ngx';
 @Component({
   selector: 'app-ver-perfil',
   templateUrl: './ver-perfil.page.html',
@@ -17,10 +18,12 @@ fecha:string;
 contra :string
 passwordTypeInput  =  'password';
 iconpassword  =  'eye-off';
-  constructor( private storage : Storage, private modalCtrl : ModalController) { }
+version : string =''
+  constructor( private storage : Storage, private modalCtrl : ModalController, private app : AppVersion) { }
 
   async ngOnInit() {
     await this.getData();
+    this.getVersion();
   }
   togglePasswordMode() {
     this.passwordTypeInput  =  this.passwordTypeInput  ===  'text'  ?  'password'  :  'text';
@@ -41,4 +44,11 @@ console.log(this.nombre,this.username,this.rol,this.plaza)
 close(){
   this.modalCtrl.dismiss();
 }
+async getVersion(){
+  await this.app.getVersionCode().then(res=>{
+  this.version = res.toString();
+ 
+  })
+  
+    }
 }

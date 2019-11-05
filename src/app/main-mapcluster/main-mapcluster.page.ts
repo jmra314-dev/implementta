@@ -308,7 +308,7 @@ async find(){
    let latLng = new LatLng (this.result[0].latitud, this.result[0].longitud)
    console.log(latLng)
     this.map.setCameraTarget(latLng)
-    this.map.setCameraZoom(10)}
+    this.map.setCameraZoom(20)}
   }
 }
 }

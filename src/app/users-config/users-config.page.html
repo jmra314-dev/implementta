@@ -12,7 +12,14 @@
 <ion-content>
   <ion-list>
     <ion-item *ngFor="let item of userInfo">
-      <ion-label>{{item.name}}</ion-label>
+      <ion-label>
+      <p>{{item.name}}</p>
+      <p>{{item.plaza}}</p>
+      <p>{{item.email}}</p>
+      <p>{{item.IMEI}}</p>
+      <p>{{item.idUserChecador}}</p>
+
+      </ion-label>
       <ion-toggle slot ="end" checked={{item.isActive}} (ionChange)="deActivate(item.name,item.uid,item.isActive)"></ion-toggle>
     </ion-item>
   </ion-list>

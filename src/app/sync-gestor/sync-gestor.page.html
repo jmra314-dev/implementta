@@ -19,8 +19,7 @@
         <p><strong>Cuenta:</strong>{{item.account}}</p>
         <p><strong>Fecha captura:</strong>{{item.fechaCaptura}}</p>
         <p><strong>Tarea:</strong>{{item.idTarea}}</p>
-        <p style="color:green" *ngIf="item.cargado==1"><strong>Estado:</strong>Sincronizada</p>
-        <p style="color:red" *ngIf="item.cargado==0"><strong>Estado:</strong>Pendiente de sincronizar</p>
+        <p><strong>Rol:</strong>{{item.rol}}</p>
       </ion-label>
     </ion-item>
   </ion-list>

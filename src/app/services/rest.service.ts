@@ -475,7 +475,7 @@ console.log(data)
     //carga las cuentas desde la base interna sqlite
 
     //  let sql ='SELECT cuenta||propietario||calle as full, cuenta,propietario,cp,calle,colonia,poblacion,numext,deudaTotal,latitud,longitud FROM implementta_status where propietario NOT NULL order by propietario';
-    let sql = `SELECT gestionada, 'CUENTA: '||cuenta||','||'PROPIETARIO: '||nombre_propietario||','||'DIRECCION: '||calle_predio||','||'NUM: '||num_exterior_predio||','||colonia_predio||','||'DEUDA: '||adeudo as full, cuenta,nombre_propietario,latitud,longitud,calle_predio,num_exterior_predio,colonia_predio,poblacion_predio,cp_predio,adeudo FROM implementta where nombre_propietario NOT NULL order by nombre_propietario`;
+    let sql = `SELECT gestionada, 'CUENTA: '||cuenta||','||'PROPIETARIO: '||nombre_propietario||','||'DIRECCION: '||calle_predio||','||'NUM: '||num_exterior_predio||','||colonia_predio||','||'DEUDA: '||adeudo as full, cuenta,nombre_propietario,latitud,longitud,calle_predio,num_exterior_predio,colonia_predio,poblacion_predio,cp_predio,adeudo FROM implementta where nombre_propietario NOT NULL order by cuenta`;
 
     return this.db
       .executeSql(sql, [])
@@ -726,7 +726,9 @@ console.log(data)
     ]);
   }
   getAccountsReadyToSyncGestor() {
-    let sql = "SELECT * from gestionGestor where cargado = 0";
+    let sql = `SELECT account, fechaCaptura, idTarea, 'Gestor' as rol from gestionGestor where cargado = 0
+              UNION SELECT account, fechaCaptura, idTarea, 'Abogado' as rol  from gestionAbogado where cargado = 0
+              UNION SELECT account, fechaCaptura, idTarea, 'Reductor' as rol  from gestionReductor where cargado = 0 `;
     return this.db
       .executeSql(sql, [])
       .then(response => {
@@ -739,7 +741,9 @@ console.log(data)
       .catch(error => Promise.reject(error));
   }
   getAccountsReadyToSyncAbogado() {
-    let sql = "SELECT * from gestionAbogado where cargado = 0";
+    let sql =`SELECT account, fechaCaptura, idTarea, 'Gestor' as rol from gestionGestor where cargado = 0
+    UNION SELECT account, fechaCaptura, idTarea, 'Abogado' as rol  from gestionAbogado where cargado = 0
+    UNION SELECT account, fechaCaptura, idTarea, 'Reductor' as rol  from gestionReductor where cargado = 0 `;
     return this.db
       .executeSql(sql, [])
       .then(response => {
@@ -752,7 +756,9 @@ console.log(data)
       .catch(error => Promise.reject(error));
   }
   getAccountsReadyToSyncReductor() {
-    let sql = "SELECT * from gestionReductor where cargado = 0";
+    let sql =`SELECT account, fechaCaptura, idTarea, 'Gestor' as rol from gestionGestor where cargado = 0
+    UNION SELECT account, fechaCaptura, idTarea, 'Abogado' as rol  from gestionAbogado where cargado = 0
+    UNION SELECT account, fechaCaptura, idTarea, 'Reductor' as rol  from gestionReductor where cargado = 0 `;
     return this.db
       .executeSql(sql, [])
       .then(response => {
@@ -766,10 +772,7 @@ console.log(data)
   }
   ///////////////////////////////////Sincronizacion al servidor SQL Server
   async getAccoutsToSyncGestor() {
-    this.loading = await this.loadingCtrl.create({
-      message: "Sincronizando al servidor de implementta...."
-    });
-    await this.loading.present();
+ 
 
     let idPlaza = await this.storage.get("IdPlaza");
     try {
@@ -777,7 +780,6 @@ console.log(data)
       const result = await this.db.executeSql(sql, []);
       if (result.rows.length === 0) {
         this.mensaje.showAlert("No hay registros para sincronizar");
-        this.loading.dismiss();
       } else {
         console.log(result);
         for (let i = 0; i < result.rows.length; i++) {
@@ -811,19 +813,15 @@ console.log(data)
 
           this.accountSyncGestor(sqlString, id);
         }
-        this.loading.dismiss();
+       
         return Promise.resolve("Executed query");
       }
     } catch (error_1) {
-      this.loading.dismiss();
+      
       return Promise.reject(error_1);
     }
   }
   async getAccoutsToSyncAbogado() {
-    this.loading = await this.loadingCtrl.create({
-      message: "Sincronizando al servidor de implementta...."
-    });
-    await this.loading.present();
 
     let idPlaza = await this.storage.get("IdPlaza");
     try {
@@ -831,7 +829,7 @@ console.log(data)
       const result = await this.db.executeSql(sql, []);
       if (result.rows.length === 0) {
         this.mensaje.showAlert("No hay registros para sincronizar");
-        this.loading.dismiss();
+      //  this.loading.dismiss();
       } else {
         console.log(result);
         for (let i = 0; i < result.rows.length; i++) {
@@ -855,19 +853,16 @@ console.log(data)
 
           this.accountSyncAbogado(sqlString, id);
         }
-        this.loading.dismiss();
+    //    this.loading.dismiss();
         return Promise.resolve("Executed query");
       }
     } catch (error_1) {
-      this.loading.dismiss();
+  //    this.loading.dismiss();
       return Promise.reject(error_1);
     }
   }
   async getAccoutsToSyncReductor() {
-    this.loading = await this.loadingCtrl.create({
-      message: "Sincronizando al servidor de implementta...."
-    });
-    await this.loading.present();
+
 
     let idPlaza = await this.storage.get("IdPlaza");
     try {
@@ -875,7 +870,7 @@ console.log(data)
       const result = await this.db.executeSql(sql, []);
       if (result.rows.length === 0) {
         this.mensaje.showAlert("No hay registros para sincronizar");
-        this.loading.dismiss();
+    //    this.loading.dismiss();
       } else {
         console.log(result);
         for (let i = 0; i < result.rows.length; i++) {
@@ -904,11 +899,11 @@ console.log(data)
 
           this.accountSyncReductor(sqlString, id);
         }
-        this.loading.dismiss();
+      //  this.loading.dismiss();
         return Promise.resolve("Executed query");
       }
     } catch (error_1) {
-      this.loading.dismiss();
+    //  this.loading.dismiss();
       return Promise.reject(error_1);
     }
   }

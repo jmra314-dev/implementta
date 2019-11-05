@@ -49,7 +49,8 @@ constructor( private modalController : ModalController, private storage : Storag
      modal.onDidDismiss().then(data=>{
       //console.log(data)
       console.log('trata de salir')
-      this.router.navigateByUrl('/home/main-list');
+
+      this.router.navigate(['/home/main-list']);
      })
   
   }
@@ -62,8 +63,8 @@ constructor( private modalController : ModalController, private storage : Storag
       modal.onDidDismiss().then(data=>{
         //console.log(data)
         console.log('trata de salir')
-        this.router.navigateByUrl('/home/main-list');
-       })
+        this.router.navigate(['/']);
+      })
    }
    
   async gestionReductor() {
@@ -74,8 +75,8 @@ constructor( private modalController : ModalController, private storage : Storag
       modal.onDidDismiss().then(data=>{
         //console.log(data)
         console.log('trata de salir')
-        this.router.navigateByUrl('/home/main-list');
-       })
+        this.router.navigate(['/']);
+      })
    
    }
    async gestionCall() {
@@ -86,7 +87,8 @@ constructor( private modalController : ModalController, private storage : Storag
      modal.onDidDismiss().then(data=>{
       //console.log(data)
       console.log('trata de salir')
-      this.router.navigateByUrl('/home/main-list');
+      this.router.navigate(['home']);
+      
      })
   }
    
