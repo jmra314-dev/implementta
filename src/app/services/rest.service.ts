@@ -971,11 +971,11 @@ console.log(data)
     let sql = "UPDATE gestionAbogado SET cargado = 1 where id = ?";
     return this.db.executeSql(sql, [id]);
   }
-  updateAccountSynDomicilios(id) {
+  updateAccountSyncDomicilios(id) {
     let sql = "UPDATE domicilios SET cargado = 1 where id = ?";
     return this.db.executeSql(sql, [id]);
   } 
-   updateAccountSynDatos(id) {
+   updateAccountSyncDatosPropietario(id) {
     let sql = "UPDATE propietario SET cargado = 1 where id = ?";
     return this.db.executeSql(sql, [id]);
   }
@@ -1183,7 +1183,7 @@ console.log(data)
           let id = result.rows.item(i).id;
           let sqlString = `'${account}','${nombre}','${telefono}','${celular}','${correo}','${fecha}',${type},${idPlaza}`;
 
-          this.accountSyncDatos(sqlString, id);
+          this.accountSyncDatosPropietario(sqlString, id);
         }
       
         return Promise.resolve("Executed query");
@@ -1193,7 +1193,7 @@ console.log(data)
       return Promise.reject(error_1);
     }
   }
-  async syncActualizacionDatos() {
+  async syncActualizacionDatosDomicilios() {
   
 
     let idPlaza = await this.storage.get("IdPlaza");
@@ -1239,7 +1239,7 @@ console.log(data)
     return new Promise(resolve => {
       this.http.post(this.apiUrl11 + " " + query, null).subscribe(
         async data => {
-          await this.updateAccountSynDatos(id);
+          await this.updateAccountSyncDomicilios(id);
           resolve(data);
         },
         err => {
@@ -1252,12 +1252,12 @@ console.log(data)
       );
     });
   }
-  async accountSyncDatos(query, id) {
+  async accountSyncDatosPropietario(query, id) {
     console.log(query);
     return new Promise(resolve => {
       this.http.post(this.apiUrl12 + " " + query, null).subscribe(
         async data => {
-          await this.updateAccountSynDatos(id);
+          await this.updateAccountSyncDatosPropietario(id);
           resolve(data);
         },
         err => {

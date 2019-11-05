@@ -34,8 +34,7 @@ loading: any;
     
     }
     
-    }
-
+    } 
   async getInfo(){
   this.address = await this.service.getDireccion()
   
@@ -51,7 +50,7 @@ loading: any;
       message: "Sincronizando al servidor..."
     });
     await this.loading.present();
-  await this.service.syncActualizacionDatos();
+  await this.service.syncActualizacionDatosDomicilios();
   await this.service.syncActualizacionDatosPropietario()
   this.loading.dismiss();
   this.modal.dismiss()
