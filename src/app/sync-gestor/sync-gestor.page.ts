@@ -40,15 +40,17 @@ loading : any
     
   if(this.rol =='5'){
    await this.service.getAccoutsToSyncGestor();
-   await this.service.getAccoutsToSyncReductor()
+
    this.loading.dismiss();
   }else if(this.rol=='2'){
     await this.service.getAccoutsToSyncAbogado();
     await this.service.getAccoutsToSyncGestor();
-    await this.service.getAccoutsToSyncReductor();
+  
     this.loading.dismiss();
   }else if(this.rol=='7'){
-  this.service.getAccoutsToSyncReductor();
+    await this.service.getAccoutsToSyncAbogado();
+    await this.service.getAccoutsToSyncGestor();
+    await this.service.getAccoutsToSyncReductor();
   this.loading.dismiss();}
   this.service.syncRecorrido();
   this.modalController.dismiss()

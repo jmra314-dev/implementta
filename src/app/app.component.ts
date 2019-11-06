@@ -122,7 +122,7 @@ this.backgroundGeolocation.configure(config)
 // start recording location
 this.backgroundGeolocation.start();
 // If you wish to turn OFF background-tracking, call the #stop method.
-//this.backgroundGeolocation.stop();
+this.backgroundGeolocation.stop();
 }
   async saveLocation(location){
   let lat = location.latitude;

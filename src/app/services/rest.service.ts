@@ -779,7 +779,7 @@ console.log(data)
       let sql = "SELECT * FROM gestionGestor where cargado = 0";
       const result = await this.db.executeSql(sql, []);
       if (result.rows.length === 0) {
-        this.mensaje.showAlert("No hay registros para sincronizar");
+       this.mensaje.showToastSync("No hay registros para sincronizar");
       } else {
         console.log(result);
         for (let i = 0; i < result.rows.length; i++) {
@@ -828,7 +828,7 @@ console.log(data)
       let sql = "SELECT * FROM gestionAbogado where cargado = 0";
       const result = await this.db.executeSql(sql, []);
       if (result.rows.length === 0) {
-        this.mensaje.showAlert("No hay registros para sincronizar");
+        this.mensaje.showToastSync("No hay registros para sincronizar");
       //  this.loading.dismiss();
       } else {
         console.log(result);
@@ -869,7 +869,7 @@ console.log(data)
       let sql = "SELECT * FROM gestionReductor where cargado = 0";
       const result = await this.db.executeSql(sql, []);
       if (result.rows.length === 0) {
-        this.mensaje.showAlert("No hay registros para sincronizar");
+        this.mensaje.showToastSync("No hay registros para sincronizar");
     //    this.loading.dismiss();
       } else {
         console.log(result);
