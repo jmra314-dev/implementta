@@ -40,9 +40,10 @@ loading: any;
     this.address = null
     this.propietarioA = null
     this.address = await this.service.getDireccion()
+    console.log(this.address)
   
     this.propietarioA = await this.service.getPropietario()
-  
+  console.log(this.propietarioA)
  
  
 
@@ -52,13 +53,11 @@ loading: any;
     this.loading = await this.loadingCtrl.create({
       message: "Sincronizando al servidor..."
     });
-    await this.loading.present();
+  await this.loading.present();
   await this.service.syncActualizacionDatosDomicilios();
   await this.service.syncActualizacionDatosPropietario()
-  this.loading.dismiss().then(()=>{
-    this.mensaje.showAlert('Sincronizacion realizada :)')
-  });
-  this.modal.dismiss()
+  this.loading.dismiss();
+  this.modal.dismiss();
 }
 delete (id, type){
   console.log('entra a borrar el id :: '+id + 'en el tipo :: '+type)

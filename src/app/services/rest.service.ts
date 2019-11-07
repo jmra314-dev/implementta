@@ -1057,7 +1057,7 @@ console.log(data)
     console.log(data)
     
     let sql =
-      " INSERT INTO domicilios(cuenta ,calle , manzana , lote,numExt , numInterior , colonia, poblacion , cp , entreCalle1 , entreCalle2,referencia,type) values(?,?,?,?,?,?,?,?,?,?,?,?,?)";
+      "INSERT INTO domicilios(cuenta ,calle , manzana , lote,numExt , numInterior , colonia, poblacion , cp , entreCalle1 , entreCalle2,referencia,type) values(?,?,?,?,?,?,?,?,?,?,?,?,?)";
     return this.db.executeSql(sql, [
       data.cuenta,
       data.calle,
@@ -1177,9 +1177,10 @@ console.log(data)
        console.log('No hay nada')
       } else {
         console.log(result);
+       
         for (let i = 0; i < result.rows.length; i++) {
           //this.sicronizadoUpdate(result.rows.item(i).id);
-
+        
           let account = result.rows.item(i).cuenta;
           let nombre =  result.rows.item(i).nombre;
           let telefono =result.rows.item(i).telefono;
@@ -1212,9 +1213,10 @@ console.log(data)
        console.log('No hay nada para sincronizar')
       } else {
         console.log(result);
+      
         for (let i = 0; i < result.rows.length; i++) {
           //this.sicronizadoUpdate(result.rows.item(i).id);
-
+          
           let account = result.rows.item(i).cuenta;
           let calle = result.rows.item(i).calle;
           let manzana = result.rows.item(i).manzana;
@@ -1229,6 +1231,9 @@ console.log(data)
           let referencia = result.rows.item(i).referencia;
           let type =  result.rows.item(i).type;
           let id = result.rows.item(i).id;
+        
+           calle = calle.replace("#", "No.");
+        //   console.log(calle)
           let sqlString = `'${account}','${calle}','${manzana}','${lote}','${numExt}','${numInt}','${colonia}','${poblacion}','${cp}','${calle1}','${calle2}','${referencia}',${type} ,${idPlaza}`;
 
           this.accountSyncDomicilios(sqlString, id);
@@ -1248,6 +1253,7 @@ console.log(data)
       this.http.post(this.apiUrl11 + " " + query, null).subscribe(
         async data => {
           await this.updateAccountSyncDomicilios(id);
+          this.mensaje.showToastSync('Registro(s) sincronizado(s)')
           resolve(data);
         },
         err => {
@@ -1266,6 +1272,7 @@ console.log(data)
       this.http.post(this.apiUrl12 + " " + query, null).subscribe(
         async data => {
           await this.updateAccountSyncDatosPropietario(id);
+          this.mensaje.showToastSync('Registro(s) sincronizado(s)')
           resolve(data);
         },
         err => {
