@@ -2,6 +2,12 @@
   <ion-toolbar>
     <ion-title>Mis cuentas gestionadas</ion-title>
     <ion-buttons slot="end">
+   
+      <div *ngIf="isHide">
+          <ion-button color="danger" (click)="reDo()">
+              <ion-icon name="refresh"></ion-icon>
+            </ion-button>
+      </div>
       <ion-button color="tertiary" (click)="syncAccounts()">
         <ion-icon name="cloud-upload"></ion-icon>
       </ion-button>
@@ -10,9 +16,9 @@
 </ion-header>
 
 <ion-content padding>
-  <div *ngIf="accounts.length == 0">
+<!--   <div *ngIf="accounts.length == 0">
     <h1>Sin cuentas gestionadas aún!</h1>
-  </div>
+  </div> -->
   <ion-list>
     <ion-item *ngFor="let item of accounts">
       <ion-label>

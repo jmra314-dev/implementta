@@ -728,7 +728,7 @@ console.log(data)
   getAccountsReadyToSyncGestor() {
     let sql = `SELECT account, fechaCaptura, idTarea, 'Gestor' as rol from gestionGestor where cargado = 0
               UNION SELECT account, fechaCaptura, idTarea, 'Abogado' as rol  from gestionAbogado where cargado = 0
-              UNION SELECT account, fechaCaptura, idTarea, 'Reductor' as rol  from gestionReductor where cargado = 0 `;
+              UNION SELECT account, fechaCaptura, idTarea, 'Reductor' as rol  from gestionReductor where cargado = 0`;
     return this.db
       .executeSql(sql, [])
       .then(response => {
@@ -904,14 +904,16 @@ console.log(data)
       }
     } catch (error_1) {
     //  this.loading.dismiss();
-      return Promise.reject(error_1);
+      return Promise.reject(error_1); 
     }
   }
   async accountSyncGestor(query, id) {
     return new Promise(resolve => {
       this.http.post(this.apiUrl6 + " " + query, null).subscribe(
         async data => {
+         
           await this.updateAccountSyncGestor(id);
+      //    console.log(data)
           resolve(data);
         },
         err => {
@@ -958,6 +960,11 @@ console.log(data)
         }
       );
     });
+  }
+  updateStatusLoadAgain(){
+    let sql = "UPDATE gestionGestor SET cargado = 0 where cargado = 1";
+    return this.db.executeSql(sql,null);
+ 
   }
   updateRecorridoSync(id) {
     let sql = "UPDATE recorrido SET cargado = 1 where id = ?";

@@ -43,6 +43,7 @@ export class SyncPagePage implements OnInit {
   progress: boolean = false;
   progressTotal: number = 0;
   idRol: number;
+  isHide : boolean
 
   constructor(
     private service: RestService,
@@ -257,14 +258,32 @@ export class SyncPagePage implements OnInit {
   }
 
   async getSyncGestor() {
-    const modal = await this.modalController.create({
-      component: SyncGestorPage
-    });
-    await modal.present();
+
+    
+    this.usersFirebase.getUserInfoAccount().subscribe(async user=>{
+      this.data = user
+      console.log('entra por la info del firebase')
+      console.log(this.data)
+      this.isHide = this.data.isHide
+
+        })
+
+        const modal = await this.modalController.create({
+          component: SyncGestorPage,
+          componentProps: {
+            isHide: this.isHide
+          }
+        });
+        await modal.present();
+    
+ 
   }
+
+
   async goUpdateInfo() {
     const modal = await this.modalController.create({
-      component: SyncUpdatePage
+      component: SyncUpdatePage,
+    
     });
     await modal.present();
   }
