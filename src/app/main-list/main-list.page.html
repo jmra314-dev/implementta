@@ -6,28 +6,36 @@
       <ion-item>
 
 
-        <ion-chip color="primary">
+        <ion-chip color="primary" (click)="filter(1)">
 
           <ion-label>
-            <p>
+            <p style="font-size: 12px;">
               <small>Total:<strong>{{total}}</strong></small>
             </p>
           </ion-label>
         </ion-chip>
-        <ion-chip color="primary">
+        <ion-chip color="success" (click)="filter(2)">
 
           <ion-label>
-            <p>
+            <p style="font-size: 12px;">
               <small>Gestionadas: <strong>{{gestionadas}}</strong></small>
             </p>
           </ion-label>
         </ion-chip>
 
-        <ion-chip color="primary">
+        <ion-chip color="danger" (click)="filter(3)">
 
           <ion-label>
-            <p>
-              <small>Faltantes:<strong>{{total - gestionadas}}</strong></small>
+            <p style="font-size: 12px;"> 
+              <small>Faltan:<strong>{{total - gestionadas}}</strong></small>
+            </p>
+          </ion-label>
+        </ion-chip>
+        <ion-chip color="primary" (click)="filter(4)">
+
+          <ion-label>
+            <p style="font-size: 12px;">
+              <small>Pagadas:<strong>{{pagadas}}</strong></small>
             </p>
           </ion-label>
         </ion-chip>

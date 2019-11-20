@@ -14,6 +14,7 @@ import { MessagesService } from "../services/messages.service";
 import { UsersFirebaseService } from "../services/users-firebase.service";
 import { SyncGestorPage } from "../sync-gestor/sync-gestor.page";
 import { SyncUpdatePage } from "../sync-update/sync-update.page";
+import { AppVersion } from '@ionic-native/app-version/ngx';
 
 @Component({
   selector: "app-sync-page",
@@ -54,7 +55,8 @@ export class SyncPagePage implements OnInit {
     private alertController: AlertController,
     private router: Router,
     private mensaje: MessagesService,
-    private usersFirebase: UsersFirebaseService
+    private usersFirebase: UsersFirebaseService,
+   private app : AppVersion
   ) {}
   /*   async getTotalG(){
     this.usersFirebase.getUserInfoAccount().subscribe(async user=>{
@@ -135,6 +137,18 @@ export class SyncPagePage implements OnInit {
     //this.getTotalG();
     this.getCountPhotos();
   }
+
+  async setVersionAndDate(fecha){
+    await this.app.getVersionCode().then(res=>{
+let version = res.valueOf().toString()
+console.log(version, fecha)
+      this.usersFirebase.setVersion(version,fecha)
+    
+   
+    })
+    
+      }
+
   ionViewDidEnter() {
     // this.showCard();
   }
@@ -198,9 +212,7 @@ export class SyncPagePage implements OnInit {
 
       let fecha = ionicDate.toISOString();
       this.storage.set("FechaSync", fecha);
-      //  this.showCard();
-      //this.mensaje.showAlert("Es recomendable reiniciar la app para visualizar correctamente la información descargada en los módulos")
-
+      await  this.setVersionAndDate(fecha);
       this.loading.dismiss();
       this.router.navigateByUrl('home/main-list')
       // navigator.app.loadUrl("file:///android_asset/www/index.html");

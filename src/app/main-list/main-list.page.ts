@@ -23,6 +23,7 @@ export class MainListPage implements OnInit {
   u: any;
   total: number;
   gestionadas: number;
+  pagadas: number;
   constructor(
     private mensaje: MessagesService,
     private iab: InAppBrowser,
@@ -46,6 +47,7 @@ console.log('Entra a el didenter')
   async getInfo() {
     this.total = await this.service.getTotalaccounts();
     this.gestionadas = await this.service.getTotalaccountsManagded();
+    this.pagadas = await this.service.getTotalAccountsPaid();
   }
 
   async goMapPage(item) {
@@ -146,6 +148,18 @@ console.log('Entra a el didenter')
     await this.getAccountInfo();
     this.loading.dismiss()
   }
+ async getPagadas(){
+  this.account = null;
+  this.account = await this.service.getDataVisitListPaid();
+  }
+  async getFaltantes(){
+    this.account = null;
+    this.account = await this.service.getDataVisitListLeft();
+  }
+  async getGestionadas(){
+    this.account = null;
+    this.account = await this.service.getDataVisitListManaged();
+  }
 
   async openLink(item) {
     this.loading = await this.loadingCtrl.create({
@@ -167,5 +181,13 @@ console.log('Entra a el didenter')
   copyAccount(account){
     this.clipboard.copy(account);
     this.mensaje.showToast('Numero de cuenta copiado al portapapeles '+ account)
+  }
+  filter(type){
+    switch (type){
+      case 1 : this. refresh(); break;
+      case 2 : this.getGestionadas(); break;
+      case 3 : this.getFaltantes(); break;
+      case 4 : this.getPagadas(); break;
+    }
   }
 }

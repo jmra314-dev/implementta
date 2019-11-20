@@ -63,7 +63,7 @@ constructor( private modalController : ModalController, private storage : Storag
       modal.onDidDismiss().then(data=>{
         //console.log(data)
         console.log('trata de salir')
-        this.router.navigate(['/']);
+        this.router.navigate(['/home/main-list']);
       })
    }
    

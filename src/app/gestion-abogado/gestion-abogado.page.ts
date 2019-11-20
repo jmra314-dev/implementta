@@ -212,20 +212,16 @@ console.log('Esta es la fecha Actual :::::::::::' + this.fechaActual)
          
        }
        console.log(data)
-                  this.gestionAbogado(data)
+             await    this.gestionAbogado(data)
+                  this.loading.dismiss()
+                  this.exit();
+
       }
       }
     
  async gestionAbogado(data){
  await this.service.gestionAbogado(data)
-  this.loading.dismiss()
-  this.mensaje.showAlert('Gestion guardada correctamente')
-  
   this.detectedChanges = false;
-
-
-
-  this.exit();
 
  }
 }

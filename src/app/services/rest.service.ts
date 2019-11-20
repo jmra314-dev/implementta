@@ -32,6 +32,7 @@ export class RestService {
   
   list = new BehaviorSubject([]);
   private dbReady: BehaviorSubject<boolean> = new BehaviorSubject(false);
+  arrayUrls : any
   array: any;
   db: SQLiteObject = null;
   apiUrl0 =
@@ -73,7 +74,10 @@ export class RestService {
     private mensaje: MessagesService,
     private s3Service: S3Service,
     private toastCtrl: ToastController
-  ) {}
+  ) {
+
+    this.arrayUrls= [];
+  }
 
   setDatabase(db: SQLiteObject) {
     if (this.db === null) {
@@ -161,7 +165,44 @@ getDataVisitListObservable() {
         console.log(err);
       });
   }
+async  uploadPhoto(id){
+  let arrayImages = [];
+  let sql = "SELECT * FROM capturaFotos where cargado = 0 and id = ?";
+  let response = await this.db.executeSql(sql, [id]);
+  for (let i = 0; i < response.rows.length; i++) {
+    arrayImages.push(response.rows.item(i));
+  }
+  await this.base64.encodeFile(arrayImages[0].rutaBase64).then(async (base64File: string) => {
+    let imageName = arrayImages[0].cuenta + arrayImages[0].fecha;
+    let imagen64 = base64File.split(",");
+    let imagenString = imagen64[1];
+    let idTarea = arrayImages[0].idTarea;
+    if (idTarea == null) { idTarea = 0; }
+   // await this.uploadPhotoS3V1(item.cuenta,item.idAspUser, idTarea, item.fecha,item.tipo, imagenString,imageName, item.id,item.rutaBase64);
+    try {
+     this.s3Service.uploadS3(imagenString, imageName);
+      let UrlOriginal: any;
+      UrlOriginal =  this.s3Service.getURLPresignaded(imageName);
+      console.log('La url::::::')
+      console.log(UrlOriginal)
+       await  this.saveSqlServer(arrayImages[0].cuenta,arrayImages[0].idAspUser,imageName,idTarea,arrayImages[0].fecha,arrayImages[0].tipo,arrayImages[0].id,UrlOriginal,arrayImages[0].ruta,1);
 
+    } catch (err_1) {
+      alert(err_1)
+      return console.log(err_1);
+    }
+
+
+  },
+  err => {
+    alert(err)
+    console.log(err);
+
+  }
+);
+
+
+}
  
   async uploadPhotos() {
     let arrayImages = [];
@@ -178,89 +219,47 @@ getDataVisitListObservable() {
       });
       await this.loading.present();
 
-      for (let item of arrayImages) {
-       await this.base64.encodeFile(item.rutaBase64).then(
-          async (base64File: string) => {
-            let imageName = item.cuenta + item.fecha;
+      for (let i = 0;i< arrayImages.length;i++) {
+       await this.base64.encodeFile(arrayImages[i].rutaBase64).then(async (base64File: string) => {
+         
+            let imageName = arrayImages[i].cuenta + arrayImages[i].fecha;
             let imagen64 = base64File.split(",");
             let imagenString = imagen64[1];
-            let idTarea = item.idTarea;
-            if (idTarea == null) {
-              idTarea = 0;
-            }
-            // await this.uploadPhotoS3(item.cuenta,item.idAspUser,idTarea,item.fecha,item.tipo,imagenString,imageName,item.id)
-            await this.uploadPhotoS3V1(
-              item.cuenta,
-              item.idAspUser,
-              idTarea,
-              item.fecha,
-              item.tipo,
-              imagenString,
-              imageName,
-              item.id,
-              item.rutaBase64
-            );
+            let idTarea = arrayImages[i].idTarea;
+            if (idTarea == null) { idTarea = 0; }
+            await this.uploadPhotoS3V1(arrayImages[i].cuenta,arrayImages[i].idAspUser, idTarea, arrayImages[i].fecha,arrayImages[i].tipo, imagenString,imageName, arrayImages[i].id,arrayImages[i].rutaBase64,i+1);
+
           },
           err => {
+            alert(err)
             console.log(err);
             this.loading.dismiss();
           }
         );
       }
+  
       this.loading.dismiss();
     }
   }
-  async showToast(mensaje) {
-    let toast = await this.toastCtrl.create({
-      message: mensaje,
-      duration: 1500,
-      position: "middle"
-    });
-    toast.present();
-  }
-  async uploadPhotoS3V1(
-    cuenta,
-    idAspuser,
-    idTarea,
-    fecha,
-    tipo,
-    base64File,
-    imageName,
-    id,
-    ruta
-  ) {
+
+  async uploadPhotoS3V1(cuenta,idAspuser,idTarea,fecha,tipo,base64File,imageName,id,ruta,cont) {
     try {
       this.s3Service.uploadS3(base64File, imageName);
       let UrlOriginal: any;
-      UrlOriginal =   this.s3Service.getURLPresignaded(imageName);
-    await  this.saveSqlServer(
-        cuenta,
-        idAspuser,
-        imageName,
-        idTarea,
-        fecha,
-        tipo,
-        id,
-        UrlOriginal
-      );
-    await  this.deletePhotoFile(ruta);
+      UrlOriginal =  this.s3Service.getURLPresignaded(imageName);
+      console.log('La url::::::')
+      console.log(UrlOriginal)
+       await  this.saveSqlServer(cuenta,idAspuser,imageName,idTarea,fecha,tipo,id,UrlOriginal,ruta,cont);
+
     } catch (err_1) {
+      alert(err_1)
       return console.log(err_1);
     }
   }
 
   ///////////////////////////////////////continuar aqui para la carga de las putas fotos
 
-  async saveSqlServer(
-    cuenta,
-    idAspuser,
-    imageName,
-    idTarea,
-    fecha,
-    tipo,
-    id,
-    url
-  ) {
+  async saveSqlServer(cuenta,idAspuser,imageName, idTarea, fecha,tipo, id,url,ruta,cont ) {    
     let a = url.split("&");
     let b = a[0];
     let b1 = b.split(":");
@@ -268,28 +267,68 @@ getDataVisitListObservable() {
     let b3 = b1[1];
     let c = a[1];
     let d = a[2];
-
+    console.log('La puta url partida')
+    console.log(b2,b3,c,d)
     let idPlaza = await this.storage.get("IdPlaza");
+ let strinSql0 = `'${cuenta}','${idAspuser}','${imageName}',${idTarea},'${fecha}','${tipo}',${idPlaza},'${b2}','${b3}','${c}','${d}'`;
   
-    let strinSql0 = `'${cuenta}','${idAspuser}','${imageName}',${idTarea},'${fecha}','${tipo}',${idPlaza},'${b2}','${b3}','${c}','${d}'`;
+      return new Promise(resolve => {
+          this.http.post(this.apiUrl5 + " " + strinSql0, null).subscribe(
+          async data => {
+            this.mensaje.showToast(data[0].mensaje+' '+cont)
+            await this.updateLoadedItem(id);
+             console.log('registroCargado al puto sql')
+             await this.deletePhotoFile(ruta);
+         //  console.log('se borro la puta foto')
+            resolve(data);
+          },
+          err => {
+            this.mensaje.showAlert(
+              "Existe un error con la red, verifica y vuelve a intentar :( "+err
+            );
+            console.log(err);
+          }
+        );
+  });
+}
 
- 
-    return new Promise(resolve => {
-      this.http.post(this.apiUrl5 + " " + strinSql0, null).subscribe(
-        async data => {
-          await this.updateLoadedItem(id);
-         
-          resolve(data);
-        },
-        err => {
-          this.mensaje.showAlert(
-            "Existe un error con la red, verifica y vuelve a intentar :("
-          );
-          console.log(err);
-        }
-      );
-    });
-  }
+finalLoad(){
+  console.log('Ahora si ya todas las fotos estan en el s3 y ya solo se manda las urls al sql')
+  console.log('Numero de veces que debe entrar el ciclo::'+ this.arrayUrls.length)
+  for(let i = 0; i < this.arrayUrls.length; i++){
+  return new Promise(resolve => {
+    console.log('numero de veces que entra el ciclo: '+i)
+    console.log('Aqui se muestra la url pero en ciclo')
+    console.log(this.arrayUrls[i+1].url)
+    this.http.post(this.apiUrl5 + " " + this.arrayUrls[i+1].url, null).subscribe(
+      async data => {
+        console.log(data)
+        await this.updateLoadedItem(this.arrayUrls[i].id);
+         console.log('registroCargado al puto sql')
+      // await this.deletePhotoFile(this.arrayUrls[i].ruta);
+     //  console.log('se borro la puta foto')
+        resolve(data);
+      },
+      err => {
+        this.mensaje.showAlert(
+          "Existe un error con la red, verifica y vuelve a intentar :("
+        );
+        console.log(err);
+      }
+    );
+  });}
+}
+
+async showToast(mensaje) {
+  let toast = await this.toastCtrl.create({
+    message: mensaje,
+    duration: 1500,
+    position: "middle"
+  });
+  toast.present();
+}
+
+
   updateLoadedItem(id) {
     let sql = "UPDATE capturaFotos SET cargado = 1 where id = ?";
     return this.db.executeSql(sql, [id]);
@@ -476,6 +515,63 @@ console.log(data)
 
     //  let sql ='SELECT cuenta||propietario||calle as full, cuenta,propietario,cp,calle,colonia,poblacion,numext,deudaTotal,latitud,longitud FROM implementta_status where propietario NOT NULL order by propietario';
     let sql = `SELECT gestionada, 'CUENTA: '||cuenta||','||'PROPIETARIO: '||nombre_propietario||','||'DIRECCION: '||calle_predio||','||'NUM: '||num_exterior_predio||','||colonia_predio||','||'DEUDA: '||adeudo as full, cuenta,nombre_propietario,latitud,longitud,calle_predio,num_exterior_predio,colonia_predio,poblacion_predio,cp_predio,adeudo FROM implementta where nombre_propietario NOT NULL order by cuenta`;
+
+    return this.db
+      .executeSql(sql, [])
+      .then(response => {
+        let arrayCuentas = [];
+
+        for (let index = 0; index < response.rows.length; index++) {
+          arrayCuentas.push(response.rows.item(index));
+        }
+
+        return Promise.resolve(arrayCuentas);
+      })
+      .catch(error => Promise.reject(error));
+  }
+  getDataVisitListPaid() {
+    //carga las cuentas desde la base interna sqlite
+
+    //  let sql ='SELECT cuenta||propietario||calle as full, cuenta,propietario,cp,calle,colonia,poblacion,numext,deudaTotal,latitud,longitud FROM implementta_status where propietario NOT NULL order by propietario';
+    let sql = `SELECT gestionada, 'CUENTA: '||cuenta||','||'PROPIETARIO: '||nombre_propietario||','||'DIRECCION: '||calle_predio||','||'NUM: '||num_exterior_predio||','||colonia_predio||','||'DEUDA: '||adeudo as full, cuenta,nombre_propietario,latitud,longitud,calle_predio,num_exterior_predio,colonia_predio,poblacion_predio,cp_predio,adeudo FROM implementta where nombre_propietario NOT NULL and adeudo = 0 order by cuenta`;
+
+    return this.db
+      .executeSql(sql, [])
+      .then(response => {
+        let arrayCuentas = [];
+
+        for (let index = 0; index < response.rows.length; index++) {
+          arrayCuentas.push(response.rows.item(index));
+        }
+
+        return Promise.resolve(arrayCuentas);
+      })
+      .catch(error => Promise.reject(error));
+  }
+  getDataVisitListLeft() {
+    //carga las cuentas desde la base interna sqlite
+
+    //  let sql ='SELECT cuenta||propietario||calle as full, cuenta,propietario,cp,calle,colonia,poblacion,numext,deudaTotal,latitud,longitud FROM implementta_status where propietario NOT NULL order by propietario';
+    let sql = `SELECT gestionada, 'CUENTA: '||cuenta||','||'PROPIETARIO: '||nombre_propietario||','||'DIRECCION: '||calle_predio||','||'NUM: '||num_exterior_predio||','||colonia_predio||','||'DEUDA: '||adeudo as full, cuenta,nombre_propietario,latitud,longitud,calle_predio,num_exterior_predio,colonia_predio,poblacion_predio,cp_predio,adeudo FROM implementta where nombre_propietario NOT NULL and gestionada = 0 order by cuenta`;
+
+    return this.db
+      .executeSql(sql, [])
+      .then(response => {
+        let arrayCuentas = [];
+
+        for (let index = 0; index < response.rows.length; index++) {
+          arrayCuentas.push(response.rows.item(index));
+        }
+
+        return Promise.resolve(arrayCuentas);
+      })
+      .catch(error => Promise.reject(error));
+  }
+  getDataVisitListManaged() {
+    //carga las cuentas desde la base interna sqlite
+
+    //  let sql ='SELECT cuenta||propietario||calle as full, cuenta,propietario,cp,calle,colonia,poblacion,numext,deudaTotal,latitud,longitud FROM implementta_status where propietario NOT NULL order by propietario';
+    let sql = `SELECT gestionada, 'CUENTA: '||cuenta||','||'PROPIETARIO: '||nombre_propietario||','||'DIRECCION: '||calle_predio||','||'NUM: '||num_exterior_predio||','||colonia_predio||','||'DEUDA: '||adeudo as full, cuenta,nombre_propietario,latitud,longitud,calle_predio,num_exterior_predio,colonia_predio,poblacion_predio,cp_predio,adeudo FROM implementta where nombre_propietario NOT NULL and gestionada = 1 order by cuenta`;
 
     return this.db
       .executeSql(sql, [])

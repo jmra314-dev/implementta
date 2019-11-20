@@ -1,10 +1,10 @@
 <ion-header>
   <ion-toolbar >
     <ion-title>Fotos a sincronizar <strong>{{totalFotos}}</strong></ion-title>
-
+ 
   <ion-buttons slot ="end">
     <ion-button color ="tertiary" (click)="uploadPhotos()"> <ion-icon name ="cloud-upload"></ion-icon></ion-button>
-  </ion-buttons>
+  </ion-buttons> 
   <ion-buttons slot ="start">
       <ion-button color ="danger" (click)="exit()"> <ion-icon name ="close"></ion-icon></ion-button>
     </ion-buttons>
@@ -34,6 +34,14 @@
           
                 <ion-item-option color="danger" (click)="deletePhoto(item.id,item.rutaBase64)">
                   <ion-icon slot="icon-only" name="trash"></ion-icon>
+          
+                </ion-item-option>
+          
+              </ion-item-options>
+              <ion-item-options side="end">
+          
+                <ion-item-option color="primary" (click)="uploadPhoto(item.id)">
+                  <ion-icon slot="icon-only" name="cloud-upload"></ion-icon>
           
                 </ion-item-option>
           

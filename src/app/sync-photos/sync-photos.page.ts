@@ -75,4 +75,10 @@ this.getInfo();
       modal.present();
     });
   }
+  async uploadPhoto(id){
+await this.service.uploadPhoto(id);
+this.modalController.getTop().then(res=>{
+  this.getInfo();
+})
+  }
 }

@@ -148,7 +148,7 @@ if(idAspuser == null || idAspuser == undefined){
 }
  
 }
-checkStatus(uid){
+checkStatus(uid){ 
 this.db.collection('usersImplementta').doc(uid).valueChanges().subscribe((res:any)=>{
 
  console.log("imprime el array donde viene el status")

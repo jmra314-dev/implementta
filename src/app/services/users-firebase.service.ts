@@ -27,5 +27,11 @@ export class UsersFirebaseService {
     return this.db.collection('usersImplementta').doc(user.uid).collection('Desempeño').valueChanges()
 
   }
-
+  setVersion(version,fecha){
+    const user = auth().currentUser
+    return this.db.collection('usersImplementta').doc(user.uid).update({
+      appVersion : version,
+      lastSync: fecha
+    })
+  }
 }
